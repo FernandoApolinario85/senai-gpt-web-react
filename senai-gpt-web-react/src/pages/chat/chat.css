@@ -1,0 +1,153 @@
+.conteiner {
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+
+}
+
+
+
+.esq-pnl {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100vh;
+    width: 20vw;
+
+}
+
+
+button {
+    background-color: black;
+    color: white;
+    border: 1px solid #0056b3;
+    border-radius: 15px;
+    padding: 10px, 20px;
+    margin-top: 15px;
+    width: 358px;
+    height: 48px;
+
+}
+
+.topo p {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin: 30px;
+    margin-left: 83px;
+}
+
+
+.topo img {
+    margin-right: 15px;
+
+}
+
+.topo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    height: 70%;
+
+}
+
+
+/* inferios */
+
+.bxo {
+    margin-bottom: 10px;
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.bxo p {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin: 30px;
+    margin-left: 83px;
+}
+
+.bxo img {
+    margin-right: 15px;
+}
+
+
+/* main */
+
+main {
+    display: flex;
+    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80vw;
+    height: 100vh;
+
+}
+
+.img-main {
+
+    margin-top: 266px;
+}
+
+.txt-main {
+
+    display: flex;
+
+}
+
+
+.txt-items {
+    margin: 85px;
+}
+
+.txt-items h1 {
+    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 600px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.txt-items img {
+
+    width: 40px;
+    height: 40px;
+}
+
+.txt-items p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d6860e;
+    font-size: 14px;
+    width: 287px;
+    height: 48px;
+    border-radius: 8px;
+    margin-top: 25px;
+
+}
+
+
+
+input {
+    background-color: #F7F9FB;
+    height: 56px;
+    width: 760px;
+    padding: 16, 20, 16, 20;
+    margin-bottom: 35px;
+    border-radius: 8px;
+
+}
