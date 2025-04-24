@@ -1,15 +1,43 @@
 import "./chat.css"
-import chat from "../../assets/imgs/chat.svg"
+import chaat from "../../assets/imgs/chat.svg"
 import claer from "../../assets/imgs/claer.svg"
 import escudo from "../../assets/imgs/escudo.svg"
 import exemple from "../../assets/imgs/exemple.svg"
 import star from "../../assets/imgs/star.svg"
-
-
-
+import seta from "../../assets/imgs/seta.svg"
+import setas from "../../assets/imgs/setas.svg"
+import chatt from "../../assets/imgs/chattt.png"
+import luz from "../../assets/imgs/luz.png"
+import accountt from "../../assets/imgs/accountt.png"
+import { useEffect, useState } from "react"
 
 
 function Chat() {
+
+    const [chats, setChats] = useState([]);
+
+    useEffect(() => {
+
+        getChats();
+        //executa todas as vezes que aber a tela
+
+    }, []);
+
+    const getChats = async () => {
+
+        let response = await fetch("https://senai-gpt-api.azurewebsites.net/Chats", {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("meuToken")
+            }
+        })
+        console.log(response);
+        if (response.ok == true) {
+            let json = await response.json(); // pega informcaoes do chat
+            setChats(json)
+        }
+    }
+
+
 
     return (
         <>
@@ -23,22 +51,13 @@ function Chat() {
 
                         <button className="btn-topo">New Chat</button>
 
-                        <p>
-                            <img src={chat} alt="primera" />
-                            Al Chat Tool Ethics
-                        </p>
+                        {chats.map(chat => (
+                            <button className="primeira">
 
-                        <p>
-                            <img src={chat} alt="segunda" />
-                            Al Tool Impact Whiting
-
-                        </p>
-
-                        <p>
-                            <img src={chat} alt="terceira" />
-                            New Chat
-
-                        </p>
+                                <img src={chaat} alt="primera" />
+                                {chat.chatTitle}
+                            </button>
+                        ))}
 
 
                     </div>
@@ -55,23 +74,23 @@ function Chat() {
                         </p>
 
                         <p>
-                            <img src="../ASSETS/Sun.svg" alt="Light icon" />
+                            <img src={luz} alt="Light icon" />
                             Light mode
 
                         </p>
 
                         <p>
-                            <img src="../ASSETS/User.svg" alt="account-icon" />
+                            <img src={accountt} alt="account-icon" />
                             My account
                         </p>
 
                         <p>
-                            <img src="../ASSETS/seta.svg" alt="seta-icon" />
+                            <img src={seta} alt="seta-icon" />
                             Updates & FAQ
 
                         </p>
                         <p>
-                            <img src="../ASSETS/seta-s.svg" alt="seta-s-icon" />
+                            <img src={setas} alt="seta-s-icon" />
                             Log out
                         </p>
 
@@ -82,11 +101,11 @@ function Chat() {
 
 
 
-                <main>
+                <main className="chat-main">
 
                     <div className="img-main">
 
-                        <img src alt="chat-imagem" />
+                        <img src={chatt} alt="chat-imagem" />
 
                     </div>
 
@@ -107,7 +126,7 @@ function Chat() {
 
                         </div>
 
-                        <div class="txt-items">
+                        <div className="txt-items">
 
                             <h1>
                                 <img src={star} alt="star-icon" />
@@ -157,4 +176,4 @@ function Chat() {
 
 
 };
-export default Chat;
+export default Chat

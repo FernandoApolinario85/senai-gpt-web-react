@@ -1,6 +1,6 @@
 import "./login.css"
 
-import logo from "../../assets/imgs/Chat.png"
+import logo from "../../assets/imgs/chat2t.png"
 import { useState } from "react";
 
 function Login() {
