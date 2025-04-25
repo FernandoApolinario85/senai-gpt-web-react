@@ -16,18 +16,35 @@
 
 }
 
-
-button {
+.btn-topo {
     background-color: black;
-    color: white;
-    border: 1px solid #0056b3;
-    border-radius: 15px;
-    
-    padding: 10px, 20px;
-    margin-top: 15px;
-    width: 358px;
-    height: 48px;
+    color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    width: 300px;
+    height: 40px;
+    border-radius: 8px;
+}
 
+.btn-secundarios {
+    background-color: transparent;
+    color: black;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px;
+    width: 300px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    padding-left: 87px;
+}
+
+.btn-secundarios:hover{
+    background-color: #333;
+    color: aliceblue;
 }
 
 .topo p {
@@ -64,6 +81,7 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: left;
 
 }
 
@@ -111,7 +129,7 @@ button {
 }
 
 .txt-items h1 {
-    
+
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -132,12 +150,13 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #d6860e;
+    background-color: #f0f0f0;
     font-size: 14px;
     width: 287px;
     height: 48px;
     border-radius: 8px;
     margin-top: 25px;
+    font-family: 20px;
 
 }
 

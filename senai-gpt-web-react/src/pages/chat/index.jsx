@@ -15,6 +15,7 @@ import { useEffect, useState } from "react"
 function Chat() {
 
     const [chats, setChats] = useState([]);
+    const [chatSelecionado, setChatselecionado] = useState(null);
 
     useEffect(() => {
 
@@ -29,12 +30,28 @@ function Chat() {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("meuToken")
             }
+
         })
         console.log(response);
         if (response.ok == true) {
             let json = await response.json(); // pega informcaoes do chat
             setChats(json)
+        } else {
+            if (response.status == 401) {
+                alert(" Token Invalido. Faca login Novamente.");
+                window.location.href = "/login"
+            }
         }
+    }
+    const onlogOutclick = () => {
+
+        localStorage.clear();
+        window.location.href = "/login";
+    }
+    const clickChat = (chat) => {
+        setChatselecionado(chat);
+        console.log(chat)
+
     }
 
 
@@ -49,12 +66,12 @@ function Chat() {
 
                     <div className="topo">
 
-                        <button className="btn-topo">New Chat</button>
+                        <button className="btn-topo">+ New Chat</button>
 
                         {chats.map(chat => (
-                            <button className="primeira">
+                            <button className="btn-secundarios" onClick={() => clickChat(chat)}>
 
-                                <img src={chaat} alt="primera" />
+                                <img src={chaat} alt="btn-secundarios" />
                                 {chat.chatTitle}
                             </button>
                         ))}
@@ -65,34 +82,35 @@ function Chat() {
 
                     <div className="bxo">
 
-                        <button>Clear Conversacio</button>
+                        <button className="btn-topo">Clear Conversacio</button>
 
-                        <p>
+                        <button className="btn-secundarios">
                             <img src={claer} alt="claer-icon" />
                             Clear conversations
 
-                        </p>
+                        </button>
 
-                        <p>
+                        <button className="btn-secundarios">
                             <img src={luz} alt="Light icon" />
                             Light mode
 
-                        </p>
+                        </button>
 
-                        <p>
+                        <button className="btn-secundarios">
                             <img src={accountt} alt="account-icon" />
                             My account
-                        </p>
+                        </button>
 
-                        <p>
+                        <button className="btn-secundarios">
                             <img src={seta} alt="seta-icon" />
                             Updates & FAQ
 
-                        </p>
-                        <p>
+                        </button>
+
+                        <button className="btn-secundarios" onClick={() => onlogOutclick()}>
                             <img src={setas} alt="seta-s-icon" />
                             Log out
-                        </p>
+                        </button>
 
                     </div>
 
@@ -102,64 +120,73 @@ function Chat() {
 
 
                 <main className="chat-main">
+                    {chatSelecionado == null && (
+                        <>
+                            <div className="img-main">
 
-                    <div className="img-main">
+                                <img src={chatt} alt="chat-imagem" />
 
-                        <img src={chatt} alt="chat-imagem" />
-
-                    </div>
+                            </div>
 
 
-                    <div className="txt-main">
+                            <div className="txt-main">
 
-                        <div className="txt-items">
+                                <div className="txt-items">
 
-                            <h1>
-                                <img src={exemple} alt="exemple-icon" />
-                                Examples
+                                    <h1>
+                                        <img src={exemple} alt="exemple-icon" />
+                                        Examples
 
-                            </h1>
+                                    </h1>
 
-                            <p>"Explain quantum computing insimple terms"</p>
-                            <p>"Got any creative ideas for a 10year old's birthday?"</p>
-                            <p>"How do I make an HTTP requestin Javascript?"</p>
+                                    <p>"Explain quantum computing insimple terms"</p>
+                                    <p>"Got any creative ideas for a 10year old's birthday?"</p>
+                                    <p>"How do I make an HTTP requestin Javascript?"</p>
 
-                        </div>
+                                </div>
 
-                        <div className="txt-items">
+                                <div className="txt-items">
 
-                            <h1>
-                                <img src={star} alt="star-icon" />
-                                Capabilities
+                                    <h1>
+                                        <img src={star} alt="star-icon" />
+                                        Capabilities
 
-                            </h1>
+                                    </h1>
 
-                            <p>Remembers what user saidearlier in the conversation.</p>
-                            <p>Allows user to provide follow-up corrections.</p>
-                            <p>Trained to decline inappropriate requests.</p>
+                                    <p>Remembers what user saidearlier in the conversation.</p>
+                                    <p>Allows user to provide follow-up corrections.</p>
+                                    <p>Trained to decline inappropriate requests.</p>
 
-                        </div>
+                                </div>
 
-                        <div className="txt-items">
+                                <div className="txt-items">
 
-                            <h1>
-                                <img src={escudo} alt="escudo-icon" />
-                                Limitations
+                                    <h1>
+                                        <img src={escudo} alt="escudo-icon" />
+                                        Limitations
 
-                            </h1>
+                                    </h1>
 
-                            <p>May occasionally generate incorrect information.</p>
-                            <p>May occasionally produce harmful instructions or biased content.</p>
-                            <p>Limited knowledge of world andevents after 2021.</p>
+                                    <p>May occasionally generate incorrect information.</p>
+                                    <p>May occasionally produce harmful instructions or biased content.</p>
+                                    <p>Limited knowledge of world andevents after 2021.</p>
 
-                        </div>
+                                </div>
 
-                    </div>
+                            </div>
+
+
+                        </>
+                    )
+
+                    }
+
+                    
 
                     <div className="input-conteiner">
 
 
-                        <input type="text" placeholder=" type mensage" />
+                        <input type="text" placeholder=" type mensage" className="input-chat" />
                     </div>
 
 
