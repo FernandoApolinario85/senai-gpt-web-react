@@ -9,6 +9,7 @@ import setas from "../../assets/imgs/setas.svg"
 import chatt from "../../assets/imgs/chattt.png"
 import luz from "../../assets/imgs/luz.png"
 import accountt from "../../assets/imgs/accountt.png"
+import enviar from "../../assets/imgs/enviar.svg"
 import { useEffect, useState } from "react"
 
 
@@ -16,6 +17,7 @@ function Chat() {
 
     const [chats, setChats] = useState([]);
     const [chatSelecionado, setChatselecionado] = useState(null);
+    const [userMessage, setUserMessage] = useState("");
 
     useEffect(() => {
 
@@ -53,7 +55,65 @@ function Chat() {
         console.log(chat)
 
     }
+    
+    const chatGPT = async (message) => {
 
+        // Configurações do endpoint e chave da API
+        const endpoint = "https://ai-testenpl826117277026.openai.azure.com/";
+        const apiKey = ;
+        const deploymentId = "gpt-4"; // Nome do deployment no Azure OpenAI
+        const apiVersion = "2024-05-01-preview"; // Verifique a versão na documentação
+
+        // URL para a chamada da API
+        const url = `${endpoint}/openai/deployments/${deploymentId}/chat/completions?api-version=${apiVersion}`;
+
+        // Configurações do corpo da requisição
+        const data = {
+            messages: [{ role: "user", content: message }],
+            max_tokens: 50
+        };
+
+        // Cabeçalhos da requisição
+        const headers = {
+            "Content-Type": "application/json",
+            "api-key": apiKey
+        };
+
+        // Faz a requisição com fetch
+        const response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            const botMessage = result.choices[0].message.content;
+            return botMessage;
+        }
+
+    }
+    const enviarMensagen = async(message) =>{
+
+        let resposta = await chatGPT(message);
+
+        console.log ("resposta: ", resposta);
+        let novaMessagenUsuario ={
+            userId: "userId",
+            text: message,
+            id: 10 
+        };
+        let novaRespostaChatGPT ={
+            userId: "chatbot",
+            text: resposta,
+            id: 10,
+        };
+        let novoChatselecionado = {... chatSelecionado };
+        novo
+
+
+    }
+    
 
 
     return (
@@ -177,17 +237,43 @@ function Chat() {
 
 
                         </>
-                    )
+                    )}
 
-                    }
+                    {chatSelecionado != null && (
 
-                    
+                        <>
+                            <div className="chat-container">
+
+                                <div className="chat-header">
+                                    <h2>{chatSelecionado.chatTitle} </h2>
+                                </div>
+
+                                <div className="chat-messages">
+
+                                    {chatSelecionado.messages.map(message => (
+                                        <p className={"message-item " +
+                                            (message.userId == "chatbot" ? "chatbot" : "")}>
+                                            {message.text} </p>
+                                    ))}
+                                </div>
+
+                            </div>
+                        </>
+                    )}
+
 
                     <div className="input-conteiner">
 
 
-                        <input type="text" placeholder=" type mensage" className="input-chat" />
+                        <input value={userMessage}
+                            onChange={event => setUserMessage(event.target.value)}
+
+                            type="text" placeholder=" type mensage" className="input-chat" />
+
+                            <img onClick={() => enviarMensagen(userMessage)} src={enviar} alt="send" />
+
                     </div>
+                    
 
 
                 </main>
