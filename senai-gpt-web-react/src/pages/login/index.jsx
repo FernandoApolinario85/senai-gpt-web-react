@@ -30,8 +30,12 @@ function Login() {
       console.log(response)
       let json = await response.json()
       let token = json.accessToken;
+      let userId = json.user.id;
+      
       console.log("token:" + token);
       localStorage.setItem("meuToken", token);
+      localStorage.setItem("meuId", userId)
+
       
       //function setcookie(nome, value, days) {
         //const date = new date();
