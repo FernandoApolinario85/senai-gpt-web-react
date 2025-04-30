@@ -12,6 +12,8 @@ import accountt from "../../assets/imgs/accountt.png";
 import enviar from "../../assets/imgs/enviar.svg";
 import { useEffect, useState } from "react";
 
+
+
 function Chat() {
   const [chats, setChats] = useState([]);
   const [chatSelecionado, setChatselecionado] = useState(null);
@@ -21,7 +23,7 @@ function Chat() {
     getChats();
     //executa todas as vezes que aber a tela
   }, []);
-
+}
   const getChats = async () => {
     let response = await fetch(
       "https://senai-gpt-api.azurewebsites.net/Chats",
@@ -99,176 +101,204 @@ function Chat() {
       userId: userId,
     };
 
+
     let novoChatselecionado = { ...chatSelecionado };
     novoChatselecionado.messages.push(novaMensagemUsuario);
     setChatselecionado(novoChatselecionado);
-     
 
-     let respostaGPT = await chatGPT(message);
-     let novaMessagenChatGPT ={
-        text: respostaGPT,
-        id: crypto.randomUUID(),
-        userId:"chatbot"
-     };
-     
-     
-     novoChatselecionado = {...novoChatselecionado};
+
+    let respostaGPT = await chatGPT(message);
+    let novaMessagenChatGPT = {
+      text: respostaGPT,
+      id: crypto.randomUUID(),
+      userId: "chatbot"
+    };
+
+
+
+    novoChatselecionado = { ...novoChatselecionado };
     novoChatselecionado.messages.push(novaMessagenChatGPT);
-     setChatselecionado(novoChatselecionado);
+    setChatselecionado(novoChatselecionado);
 
-    // let resposta = await chatGPT(message);
+    let response = await fetch("https://senai-gpt-api.azurewebsites.net/chats/" + chatSelecionado.id, {
+      method: "PUT",
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("meuToken"),
+        "content-type": "application/json"
+      },
+    });
 
-    // console.log ("resposta: ", resposta);
-    // let novaMessagenUsuario ={
-    //     userId: "userId",
-    //     text: message,
-    //     id: 10
-    // };
-    // let novaRespostaChatGPT ={
-    //     userId: "chatbot",
-    //     text: resposta,
-    //     id: 10,
-    // };
-    // let novoChatselecionado = {... chatSelecionado };
-    // novo
+    if (response.ok == false) {
+      console.log("Salvar o chat deu errado");
+    }
+
+
   };
+  const novoChat = async () => {
+    let novoTitulo = prompt("insirao titulo do chat:");
+    if (novoTitulo == null || novoTitulo == "") {
+      alert("insira um titulo.");
+      return;
 
-  return (
-    <>
-      <div className="conteiner">
-        <header className="esq-pnl">
-          <div className="topo">
-            <button className="btn-topo">+ New Chat</button>
+      let userId = localStorage.getItem("meuId");
+      let nChat = {
 
-            {chats.map((chat) => (
-              <button
-                className="btn-secundarios"
-                onClick={() => clickChat(chat)}
-              >
-                <img src={chaat} alt="btn-secundarios" />
-                {chat.chatTitle}
-              </button>
-            ))}
-          </div>
+        chatTitle: novoTitulo,
+        id: crypto.randomUUID(),
+        userId: userId,
+        messages: [],
 
-          <div className="bxo">
-            <button className="btn-topo">Clear Conversacio</button>
+      }
+      let response = await fetch("https://senai-gpt-api.azurewebsites.net/chats", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer" + localStorage.getItem("meuToken"),
+          "content-type": "application/json"
+        },
+        if(response.ok) {
+          await getChats();
 
-            <button className="btn-secundarios">
-              <img src={claer} alt="claer-icon" />
-              Clear conversations
+    }
+
+  }),
+}
+
+return (
+  <>
+    <div className="conteiner">
+      <header className="esq-pnl">
+        <div className="topo">
+          <button onClick={""} className="btn-topo">+ New Chat</button>
+
+          {chats.map((chat) => (
+            <button
+              className="btn-secundarios"
+              onClick={() => clickChat(chat)}
+            >
+              <img src={chaat} alt="btn-secundarios" />
+              {chat.chatTitle}
             </button>
+          ))}
+        </div>
 
-            <button className="btn-secundarios">
-              <img src={luz} alt="Light icon" />
-              Light mode
-            </button>
+        <div className="bxo">
+          <button className="btn-topo">Clear Conversacio</button>
 
-            <button className="btn-secundarios">
-              <img src={accountt} alt="account-icon" />
-              My account
-            </button>
+          <button className="btn-secundarios">
+            <img src={claer} alt="claer-icon" />
+            Clear conversations
+          </button>
 
-            <button className="btn-secundarios">
-              <img src={seta} alt="seta-icon" />
-              Updates & FAQ
-            </button>
+          <button className="btn-secundarios">
+            <img src={luz} alt="Light icon" />
+            Light mode
+          </button>
 
-            <button className="btn-secundarios" onClick={() => onlogOutclick()}>
-              <img src={setas} alt="seta-s-icon" />
-              Log out
-            </button>
-          </div>
-        </header>
+          <button className="btn-secundarios">
+            <img src={accountt} alt="account-icon" />
+            My account
+          </button>
 
-        <main className="chat-main">
-          {chatSelecionado == null && (
-            <>
-              <div className="img-main">
-                <img src={chatt} alt="chat-imagem" />
+          <button className="btn-secundarios">
+            <img src={seta} alt="seta-icon" />
+            Updates & FAQ
+          </button>
+
+          <button className="btn-secundarios" onClick={() => onlogOutclick()}>
+            <img src={setas} alt="seta-s-icon" />
+            Log out
+          </button>
+        </div>
+      </header>
+
+      <main className="chat-main">
+        {chatSelecionado == null && (
+          <>
+            <div className="img-main">
+              <img src={chatt} alt="chat-imagem" />
+            </div>
+
+            <div className="txt-main">
+              <div className="txt-items">
+                <h1>
+                  <img src={exemple} alt="exemple-icon" />
+                  Examples
+                </h1>
+
+                <p>"Explain quantum computing insimple terms"</p>
+                <p>"Got any creative ideas for a 10year old's birthday?"</p>
+                <p>"How do I make an HTTP requestin Javascript?"</p>
               </div>
 
-              <div className="txt-main">
-                <div className="txt-items">
-                  <h1>
-                    <img src={exemple} alt="exemple-icon" />
-                    Examples
-                  </h1>
+              <div className="txt-items">
+                <h1>
+                  <img src={star} alt="star-icon" />
+                  Capabilities
+                </h1>
 
-                  <p>"Explain quantum computing insimple terms"</p>
-                  <p>"Got any creative ideas for a 10year old's birthday?"</p>
-                  <p>"How do I make an HTTP requestin Javascript?"</p>
-                </div>
+                <p>Remembers what user saidearlier in the conversation.</p>
+                <p>Allows user to provide follow-up corrections.</p>
+                <p>Trained to decline inappropriate requests.</p>
+              </div>
 
-                <div className="txt-items">
-                  <h1>
-                    <img src={star} alt="star-icon" />
-                    Capabilities
-                  </h1>
+              <div className="txt-items">
+                <h1>
+                  <img src={escudo} alt="escudo-icon" />
+                  Limitations
+                </h1>
 
-                  <p>Remembers what user saidearlier in the conversation.</p>
-                  <p>Allows user to provide follow-up corrections.</p>
-                  <p>Trained to decline inappropriate requests.</p>
-                </div>
+                <p>May occasionally generate incorrect information.</p>
+                <p>
+                  May occasionally produce harmful instructions or biased
+                  content.
+                </p>
+                <p>Limited knowledge of world andevents after 2021.</p>
+              </div>
+            </div>
+          </>
+        )}
 
-                <div className="txt-items">
-                  <h1>
-                    <img src={escudo} alt="escudo-icon" />
-                    Limitations
-                  </h1>
+        {chatSelecionado != null && (
+          <>
+            <div className="chat-container">
+              <div className="chat-header">
+                <h2>{chatSelecionado.chatTitle} </h2>
+              </div>
 
-                  <p>May occasionally generate incorrect information.</p>
-                  <p>
-                    May occasionally produce harmful instructions or biased
-                    content.
+              <div className="chat-messages">
+                {chatSelecionado.messages.map((message) => (
+                  <p
+                    className={
+                      "message-item " +
+                      (message.userId == "chatbot" ? "chatbot" : "")
+                    }
+                  >
+                    {message.text}{" "}
                   </p>
-                  <p>Limited knowledge of world andevents after 2021.</p>
-                </div>
+                ))}
               </div>
-            </>
-          )}
+            </div>
+          </>
+        )}
 
-          {chatSelecionado != null && (
-            <>
-              <div className="chat-container">
-                <div className="chat-header">
-                  <h2>{chatSelecionado.chatTitle} </h2>
-                </div>
+        <div className="input-conteiner">
+          <input
+            value={userMessage}
+            onChange={(event) => setUserMessage(event.target.value)}
+            type="text"
+            placeholder=" type mensage"
+            className="input-chat"
+          />
 
-                <div className="chat-messages">
-                  {chatSelecionado.messages.map((message) => (
-                    <p
-                      className={
-                        "message-item " +
-                        (message.userId == "chatbot" ? "chatbot" : "")
-                      }
-                    >
-                      {message.text}{" "}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
-
-          <div className="input-conteiner">
-            <input
-              value={userMessage}
-              onChange={(event) => setUserMessage(event.target.value)}
-              type="text"
-              placeholder=" type mensage"
-              className="input-chat"
-            />
-
-            <img
-              onClick={() => enviarMensagen(userMessage)}
-              src={enviar}
-              alt="send"
-            />
-          </div>
-        </main>
-      </div>
-    </>
-  );
+          <img
+            onClick={() => enviarMensagen(userMessage)}
+            src={enviar}
+            alt="send"
+          />
+        </div>
+      </main>
+    </div>
+  </>
+);
 }
 export default Chat;
