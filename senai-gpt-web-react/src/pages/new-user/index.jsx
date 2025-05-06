@@ -1,6 +1,6 @@
 import "./new-user.css";
 import { useState } from "react";
-// import logo from "../../assets/imgs/src/assets/imgs/Rectangle1.png"
+import logo2 from "../../assets/imgs/chat2t.png"
 
 
 function NewUser() {
@@ -8,8 +8,9 @@ function NewUser() {
     const [password, setpassword] = useState("");
     const [conpassword, setconpassword] = useState("");
     const [novoUsuario, setnovoUsuario] = useState("");
+    
     const onCadastro = async () => {
-        let response = await fetch("https://senai-gpt-api.up.railway.app/chats", {
+        let response = await fetch("https://senai-gpt-api.up.railway.app/users", {
 
             headers: {
       
@@ -79,26 +80,26 @@ function NewUser() {
 
                 <div className="login-conteiner">
 
-                    <img className="logo" src={logo} alt="logo seneiGPT" />
+                    <img className="logo" src={logo2} alt="logo seneiGPT" />
 
 
 
-                    <h1 id="meutitulo" className="titulo">login</h1>
+                    <h1 id="meutitulo" className="titulo">Cadastro</h1>
 
-                    <input className="inpt" valeu={novoUsuario}
+                    <input className="inpt" value={novoUsuario}
                         onChange={event => setnovoUsuario(event.target.value)} type="text" placeholder="Nome Do Usuario" />
 
-                    <input className="inpt" valeu={email}
+                    <input className="inpt" value={email}
                         onChange={event => setEmail(event.target.value)} type="email" placeholder=" insira o e-mail" />
 
-                    <input className="inpt" valeu={password}
+                    <input className="inpt" value={password}
                         onChange={event => setpassword(event.target.value)} type="password" placeholder="senha" />
 
-                    <input className="inpt" valeu={ conpassword}
+                    <input className="inpt" value={ conpassword}
                         onChange={event => setconpassword(event.target.value)} type="password" placeholder="Confirme a Senha" />
                     
                     <button className="btn" onClick={() =>onCadastro ()}>eu Cadastro</button>
-                    <button className="sbtn" onClick={() =>onNovoUsuario ()}>Faca Seu Cadastro</button>
+                    
                     
 
                 </div>

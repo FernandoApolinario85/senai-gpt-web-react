@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Login from "./pages/login"
 import Chat from "./pages/chat"
-import newuser from "./pages/new-user"
+import NewUser from "./pages/new-user"
 
 function App() {
 
@@ -25,6 +25,7 @@ function App() {
           <Route path="/login" element={<Login />}> </Route>
           <Route path= "/chat" element={isAuthenticad() == true? <Chat/> :<Login/> }> </Route>
           <Route path="*" element={<h1>Not Foud</h1>}> </Route>
+          <Route path= "/new-user" element={isAuthenticad() == true? <NewUser/> :<Chat/> }> </Route>
 
         </Routes>
 

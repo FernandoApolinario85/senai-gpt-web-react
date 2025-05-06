@@ -18,6 +18,7 @@ function Chat() {
   const [chats, setChats] = useState([]);
   const [chatSelecionado, setChatselecionado] = useState(null);
   const [userMessage, setUserMessage] = useState("");
+  const [ isLeftPanelOpen, setIspanelOpen] = useState (false);
 
   useEffect(() => {
     getChats();
@@ -55,7 +56,7 @@ function Chat() {
   };
 
   const chatGPT = async (message) => {
-    return  "[en matenimiento]"
+    return "[en matenimiento]"
     // Configurações do endpoint e chave da API
     const endpoint = "https://ai-testenpl826117277026.openai.azure.com/";
     const apiKey =
@@ -91,7 +92,7 @@ function Chat() {
       return botMessage;
     }
   };
-  
+
 
   const enviarMensagen = async (message) => {
     console.log("mensagem", message);
@@ -173,7 +174,10 @@ function Chat() {
   return (
     <>
       <div className="conteiner">
-        <header className="esq-pnl">
+        <button className="btn-toggle-panel" onClick={() => setIspanelOpen(true)} >
+          ☰
+        </button>
+        <header className={`esq-pnl ${isLeftPanelOpen == true ? "open" : "" }`}>
           <div className="topo">
             <button onClick={novoChat} className="btn-topo">+ New Chat</button>
 
