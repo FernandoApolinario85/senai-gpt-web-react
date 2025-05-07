@@ -8,6 +8,10 @@ function NewUser() {
     const [password, setpassword] = useState("");
     const [conpassword, setconpassword] = useState("");
     const [novoUsuario, setnovoUsuario] = useState("");
+    const onNovoUsuario = async () => {
+
+      window.location. href = "/login"
+    }
     
     const onCadastro = async () => {
         let response = await fetch("https://senai-gpt-api.up.railway.app/users", {
@@ -60,10 +64,7 @@ function NewUser() {
           }
       
     }
-    const onNovoUsuario = async() => {
-       
-    }
-
+    
 
 
     return (
@@ -98,7 +99,9 @@ function NewUser() {
                     <input className="inpt" value={ conpassword}
                         onChange={event => setconpassword(event.target.value)} type="password" placeholder="Confirme a Senha" />
                     
-                    <button className="btn" onClick={() =>onCadastro ()}>eu Cadastro</button>
+                    <button className="btn" onClick={() =>onCadastro ()}>Cadastrar</button>
+                    <button className="btn" onClick={() =>onNovoUsuario ()}>login</button>
+                    
                     
                     
 

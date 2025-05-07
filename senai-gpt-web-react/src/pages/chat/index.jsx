@@ -52,6 +52,7 @@ function Chat() {
 
   const clickChat = (chat) => {
     setChatselecionado(chat);
+    setIspanelOpen(false);
     console.log(chat);
   };
 
@@ -174,7 +175,7 @@ function Chat() {
   return (
     <>
       <div className="conteiner">
-        <button className="btn-toggle-panel" onClick={() => setIspanelOpen(true)} >
+        <button className="btn-toggle-panel" onClick={() => setIspanelOpen(!isLeftPanelOpen)} >
           ☰
         </button>
         <header className={`esq-pnl ${isLeftPanelOpen == true ? "open" : "" }`}>

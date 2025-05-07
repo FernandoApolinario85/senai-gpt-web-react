@@ -108,3 +108,10 @@ h1 {
   }
 
 }
+@media screen and (max-width: 768px){
+  .logo{
+    width: 80vw;
+    height: 35vw;
+  }
+  
+}

@@ -25,7 +25,7 @@ function App() {
           <Route path="/login" element={<Login />}> </Route>
           <Route path= "/chat" element={isAuthenticad() == true? <Chat/> :<Login/> }> </Route>
           <Route path="*" element={<h1>Not Foud</h1>}> </Route>
-          <Route path= "/new-user" element={isAuthenticad() == true? <NewUser/> :<Chat/> }> </Route>
+          <Route path= "/new-user" element={<NewUser/>}> </Route>
 
         </Routes>
 

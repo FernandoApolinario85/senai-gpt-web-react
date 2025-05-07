@@ -89,6 +89,7 @@ function Login() {
           <input className="inpt" valeu={password} onChange={event => setpassword(event.target.value)} type="password" placeholder="senha" />
 
           <button className="btn" onClick={() => onLoginClick()}>enviar</button>
+          
           <button className="btn" onClick={() =>onNovoUsuario ()}>Faca Seu Cadastro</button>
 
         </div>
