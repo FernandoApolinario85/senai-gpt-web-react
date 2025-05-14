@@ -1,5 +1,6 @@
 import "./chat.css";
 import chaat from "../../assets/imgs/chat.svg";
+import chatwhite from "../../assets/imgs/chat-white.svg"
 import claer from "../../assets/imgs/claer.svg";
 import escudo from "../../assets/imgs/escudo.svg";
 import exemple from "../../assets/imgs/exemple.svg";
@@ -18,7 +19,8 @@ function Chat() {
   const [chats, setChats] = useState([]);
   const [chatSelecionado, setChatselecionado] = useState(null);
   const [userMessage, setUserMessage] = useState("");
-  const [ isLeftPanelOpen, setIspanelOpen] = useState (false);
+  const [isLeftPanelOpen, setIspanelOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     getChats();
@@ -27,7 +29,7 @@ function Chat() {
 
   const getChats = async () => {
     let response = await fetch(
-      "https://senai-gpt-api.railway.app/chats",
+      "https://senai-gpt-api.up.railway.app/chats",
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("meuToken"),
@@ -172,13 +174,24 @@ function Chat() {
     }
   }
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode); // faz inverter  valor do dark mode
+    if (darkMode == true) {
+      document.body.classList.remove("dark-mode");
+    } else {
+      document.body.classList.add("dark-mode");
+    }
+    localStorage.setItem("dark-mode, !darkMode");
+
+  }
+
   return (
     <>
       <div className="conteiner">
         <button className="btn-toggle-panel" onClick={() => setIspanelOpen(!isLeftPanelOpen)} >
           ☰
         </button>
-        <header className={`esq-pnl ${isLeftPanelOpen == true ? "open" : "" }`}>
+        <header className={`esq-pnl ${isLeftPanelOpen == true ? "open" : ""}`}>
           <div className="topo">
             <button onClick={novoChat} className="btn-topo">+ New Chat</button>
 
@@ -187,7 +200,7 @@ function Chat() {
                 className="btn-secundarios"
                 onClick={() => clickChat(chat)}
               >
-                <img src={chaat} alt="btn-secundarios" />
+                <img src={darkMode == true? chatwhite : chaat} alt="btn-secundarios" />
                 {chat.chatTitle}
               </button>
             ))}
@@ -201,9 +214,11 @@ function Chat() {
               Clear conversations
             </button>
 
-            <button className="btn-secundarios">
+            <button className="btn-secundarios" onClick={() => toggleDarkMode()}>
+
               <img src={luz} alt="Light icon" />
               Light mode
+
             </button>
 
             <button className="btn-secundarios">

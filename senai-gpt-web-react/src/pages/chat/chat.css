@@ -104,7 +104,7 @@
 
 .chat-main {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -223,6 +223,13 @@ input {
 }
 .btn-toggle-panel{
     display: none;
+}
+body.dark-mode .esq-pnl{
+    background-color: #000 !important;
+    
+}
+body.dark-mode.btn-secundarios{
+    color: #f0f0f0;
 }
 
 @media screen and (max-width: 768px) {
